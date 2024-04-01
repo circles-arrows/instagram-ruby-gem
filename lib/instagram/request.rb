@@ -46,7 +46,8 @@ module Instagram
         when :get, :delete
           request.url(URI.encode_uri_component(path), options)
         when :post, :put
-          request.path = path # URI.encode_uri_component(path)
+          puts path
+          request.path = URI.encode_uri_component(path)
           request.body = options unless options.empty?
         end
         if signature && client_ips != nil
