@@ -1,6 +1,5 @@
 require 'openssl'
 require 'base64'
-require 'cgi'
 
 module Instagram
   # Defines HTTP request methods
@@ -45,9 +44,9 @@ module Instagram
 
         case method
         when :get, :delete
-          request.url(CGI.escape(path), options)
+          request.url(URI.encode_uri_component(path), options)
         when :post, :put
-          request.path = CGI.escape(path)
+          request.path = path # URI.encode_uri_component(path)
           request.body = options unless options.empty?
         end
         if signature && client_ips != nil
